@@ -1,0 +1,31 @@
+{
+  "name": "cerv",
+  "version": "0.0.1",
+  "description": "A super fast http server",
+  "main": "src/index.js",
+  "dependencies": {
+    "radix-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "ava": "^0.22.0",
+    "r2": "^2.0.0"
+  },
+  "scripts": {
+    "test": "ava test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/charlieduong94/cerv.git"
+  },
+  "keywords": [
+    "fast",
+    "http",
+    "server"
+  ],
+  "author": "Charlie Duong",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/charlieduong94/cerv/issues"
+  },
+  "homepage": "https://github.com/charlieduong94/cerv#readme"
+}
