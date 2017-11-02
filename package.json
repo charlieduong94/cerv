@@ -8,7 +8,9 @@
   },
   "devDependencies": {
     "ava": "^0.22.0",
-    "r2": "^2.0.0"
+    "proxyquire": "^1.8.0",
+    "r2": "^2.0.0",
+    "sinon": "^4.0.2"
   },
   "scripts": {
     "test": "ava test"

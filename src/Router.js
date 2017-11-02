@@ -54,7 +54,6 @@ class Router {
     assert(routeData, 'An object specifying route data must be provided')
 
     const { path, middleware, handler } = routeData
-    let handlerFuncs
 
     assert(path, 'The route\'s path must be specified')
     assert(typeof path === 'string', 'The route\'s path attribute must be a string')
@@ -62,16 +61,20 @@ class Router {
     const method = routeData.method || 'GET'
     assert(METHODS.indexOf(method) !== -1, `Method: "${method}" is not supported`)
 
+    let handlerFuncs
+
     if (middleware) {
       assert(middleware instanceof Array, 'The route\'s middleware must be provided as an array')
 
       _assertMiddlewareFuncs(middleware)
       handlerFuncs = this._middleware.concat(middleware)
+    } else {
+      handlerFuncs = this._middleware
     }
 
     assert(handler, 'Route handler must be provided')
     assert(typeof handler === 'function', 'Route handler must be a function')
-    handlerFuncs = handlerFuncs ? handlerFuncs.concat(handler) : this._middleware.concat(handler)
+    handlerFuncs = handlerFuncs.concat(handler)
 
     const router = this._router
 
