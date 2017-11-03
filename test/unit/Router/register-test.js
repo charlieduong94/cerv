@@ -104,3 +104,62 @@ test('#register should throw an error if the path provided is not a string', (t)
   sandbox.assert.calledOnce(composeStub)
   sandbox.assert.calledWith(composeStub, [ middlewareFunc, handler ])
 })
+
+test('#register should push the path and the composed handler into ' +
+'the underlying router if path does not exist', (t) => {
+  t.plan(0)
+
+  const { sandbox } = t.context
+  const router = new Router()
+
+  const underlyingPathRouter = router._router
+
+  const insertStub = sandbox.stub(underlyingPathRouter, 'insert')
+
+  const path = '/some/path'
+
+  router.register({
+    path,
+    handler () {}
+  })
+
+  sandbox.assert.calledOnce(insertStub)
+  sandbox.assert.calledWith(insertStub, sandbox.match((input) =>
+    input.path === path &&
+    typeof input.methods.GET === 'function' &&
+    Object.keys(input.methods).length === 1
+  ))
+})
+
+test('#register should override the current handler for a path and method', (t) => {
+  t.plan(1)
+
+  const { sandbox } = t.context
+  const router = new Router()
+
+  const path = '/some/path'
+
+  const underlyingPathRouter = router._router
+
+  const originalHandler = function () {}
+
+  underlyingPathRouter.insert({
+    path,
+    methods: {
+      GET: originalHandler
+    }
+  })
+
+  const insertStub = sandbox.stub(underlyingPathRouter, 'insert')
+
+  router.register({
+    path,
+    handler () {}
+  })
+
+  sandbox.assert.calledOnce(insertStub)
+
+  const routeData = underlyingPathRouter.lookup(path)
+
+  t.true(routeData.methods.GET !== originalHandler)
+})

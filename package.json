@@ -8,12 +8,13 @@
   },
   "devDependencies": {
     "ava": "^0.22.0",
+    "nyc": "^11.2.1",
     "proxyquire": "^1.8.0",
     "r2": "^2.0.0",
     "sinon": "^4.0.2"
   },
   "scripts": {
-    "test": "ava test"
+    "test": "nyc ava test"
   },
   "repository": {
     "type": "git",
